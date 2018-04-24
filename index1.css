@@ -18,7 +18,7 @@ background:url(bg.jpg);	color:black;
 	background-color: #2196F3;
 	border: 0px;
 	margin: 0px;
-	width: 50px;
+	width: 70px;
 	height: 30px;
 	border-radius: 10px;
 }
@@ -36,11 +36,8 @@ background:url(bg.jpg);	color:black;
 	font-size: 10px;
     background-color: #2196F3;
     color: #00fff9 ;
-    width: 420px;
+    width: 500px;
     
     position: relative;
-    left: 35%;
+    left: 450px;
 }
-
-
-
