@@ -4,9 +4,9 @@
 <?php
 
 session_start();
-$_SESSION['loggedin']=false;
-$user="sh";
-$pass="sh";
+$_SESSION['username']=NULL;
+$user=array("sh","shivam","stb");
+$pass=array("sh","shivam","pass");
 
 
 
@@ -31,24 +31,30 @@ $pass="sh";
 		<?php
 
 		if(isset($_POST['n']) && isset($_POST['p'])){
-	if( $_POST['n'] == $user && ($_POST['p'] == $pass)) {
-		$_SESSION['loggedin']=true;
+			$username=htmlentities($_POST['n']);
+			$password=htmlentities($_POST['p']);
+			$count=0;
+			while($count<count($user)){
+	if(  $username== $user[$count] && ( $password== $pass[$count])) {
+		$_SESSION['username']=$username;
 		header("Location:index.php");
+		break;
 	}
-	else{
+	$count++;
+	}
+	if($count>=count($user)){
 		echo '
 		<div id="wrong">
 		<h1>Wrong username or password</h1>
-		
+
 		</div>
 		';
 	}
 
-	
 }
 		?>
 		<form id="form" method="POST" action="login.php">
-			<input required="required" type="text" name="n" placeholder="name"><br>
+			<input required="required" type="text" name="n" placeholder="username"><br>
 			<input required="required" type="password" name="p" placeholder="password"><br>
 			
 			<button id="submit">Log in</button>
