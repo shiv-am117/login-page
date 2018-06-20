@@ -1,56 +1,45 @@
 
 <!DOCTYPE HTML>
 
-<?php
-
-session_start();
-$_SESSION['username']=NULL;
-$user=array("sh","shivam","stb");
-$pass=array("sh","shivam","pass");
-
-
-
-
-
-
-
-?>
-
-
 <html>
 <head>
 	<title>login page</title>
-	<link rel="stylesheet" type="text/css" href="index.css">
-
+	<link rel="stylesheet" type="text/css" href="login.css">
 </head>
 <body >
-
-	
 	<div id="main">
 		<h1 id="title">Login Page</h1>
 		<?php
-
+			require "connect.php";
+			require "core.php";
+			$_SESSION['id']=0;
 		if(isset($_POST['n']) && isset($_POST['p'])){
-			$username=htmlentities($_POST['n']);
-			$password=htmlentities($_POST['p']);
-			$count=0;
-			while($count<count($user)){
-	if(  $username== $user[$count] && ( $password== $pass[$count])) {
-		$_SESSION['username']=$username;
-		header("Location:index.php");
-		break;
-	}
-	$count++;
-	}
-	if($count>=count($user)){
-		echo '
-		<div id="wrong">
-		<h1>Wrong username or password</h1>
+			if(!empty($_POST['n']) && !empty($_POST['p'])){
+				$username=htmlentities($_POST['n']);
+				$password=md5(htmlentities($_POST['p']));
+				if(username_exists($username)&&pass_match($username,$password)){
+		$query="SELECT `id` from `users` WHERE `username`='$username' ";
+		$result=mysqli_query($link,$query);
+		
+			$output=mysqli_fetch_assoc($result);
+			
 
-		</div>
-		';
-	}
+			$_SESSION['id']=$output["id"];
+			header("Location:index.php");
+			
+		
+		}
+		else{
+			echo '
+			<div id="wrong">
+			<h1>Wrong username or password</h1>
 
+			</div>
+			';
+		
+
+	}
+}
 }
 		?>
 		<form id="form" method="POST" action="login.php">
@@ -61,9 +50,6 @@ $pass=array("sh","shivam","pass");
 		</form>
 		
 	</div>
-
-
-
 </body>
 </html>
 
